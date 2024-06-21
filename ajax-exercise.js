@@ -31,7 +31,22 @@ document
 
 // PART 3: Order Cookies
 
-function orderCookies(evt) {
+async function orderCookies(evt) {
+  evt.preventDefault();
+  const cookieType = document.querySelector("#cookie-type-field").value;
+  const qty = document.querySelector("#qty-field").value;
+  const res = await axios.post("/order-cookies.json", {
+    cookieType: cookieType,
+    qty: qty,
+  });
+
+  const orderStatusDiv = document.querySelector("#order-status");
+  orderStatusDiv.innerText = res.data.message;
+  if (res.data.resultCode === "ERROR") {
+    orderStatusDiv.classList.add("order-error");
+  } else {
+    orderStatusDiv.classList.remove("order-error");
+  }
   // TODO: Need to preventDefault here, because we're listening for a submit event!
   // TODO: show the result message after your form
   // TODO: if the result code is ERROR, make it show up in red (see our CSS!)
