@@ -17,9 +17,11 @@ document
 
 // PART 2: Show Weather
 
-function showWeather(evt) {
+async function showWeather(evt) {
   const zipcode = document.querySelector("#zipcode-field").value;
-
+  const url = `/weather.txt?zipcode=${zipcode}`;
+  const res = await axios.get(url);
+  document.querySelector("#weather-info").innerText = res.data;
   // TODO: request weather with that URL and show the forecast in #weather-info
 }
 
